@@ -1,36 +1,40 @@
 import knex from 'knex';
+import 'dotenv/config';
 
-// Read only user
+// READ ONLY USER
 export const readOnly = knex({
   client: 'mysql2',
   connection: {
-    host: '127.0.0.1',
-    user: 'readOnlyUser',
-    password: 'readOnly',
-    database: 'rentals',
+    host: process.env.DB_READ_HOST || '127.0.0.1',
+    user: process.env.DB_READ_USER || 'readOnlyUser',
+    password: process.env.DB_READ_PASSWORD || 'readOnly',
+    database: process.env.DB_NAME || 'rentals',
+    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
     decimalNumbers: true,
     dateStrings: true
   },
 });
 
-// Read and write only user
+// READ AND WRITE USER
 export const readWriteOnly = knex({
   client: 'mysql2',
   connection: {
-    host: '127.0.0.1',
-    user: 'readWriteUser',
-    password: 'readWrite',
-    database: 'rentals'
+    host: process.env.DB_WRITE_HOST || '127.0.0.1',
+    user: process.env.DB_WRITE_USER || 'readWriteUser',
+    password: process.env.DB_WRITE_PASSWORD || 'readWrite',
+    database: process.env.DB_NAME || 'rentals',
+    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
   },
 });
 
-// Admin user
+// ADMIN USER
 export const admin = knex({
   client: 'mysql2',
   connection: {
-    host: '127.0.0.1',
-    user: 'admin',
-    password: 'admin',
-    database: 'rentals'
+    host: process.env.DB_ADMIN_HOST || '127.0.0.1',
+    user: process.env.DB_ADMIN_USER || 'admin',
+    password: process.env.DB_ADMIN_PASSWORD || 'admin',
+    database: process.env.DB_NAME || 'rentals',
+    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
   },
 });
