@@ -1,0 +1,11 @@
+# Root dependencies
+node_modules/
+
+# Frontend specific blocks
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# Backend specific blocks
+backend/node_modules/
+backend/.env
