@@ -61,11 +61,10 @@ export const getPostcodes = async (center, bounds, currentPropertyPC) => {
   const distanceInMeters = Math.max(Math.min(distanceInDegrees * 111000, 4000), 1500);
 
   // Fetch postcodes visible on map (need a proxy to bypass CORS restrictions)
-  const targetURL = `https://v0.postcodeapi.com.au/radius.json?&latitude=${center[0]}&longitude=${center[1]}&distance=${distanceInMeters}`
-  const proxiedURL = `https://corsproxy.io/?url=${encodeURIComponent(targetURL)}`;
+  const targetURL = `/postcodes?&latitude=${center[0]}&longitude=${center[1]}&distance=${distanceInMeters}`
 
   try {
-    const response = await fetch(proxiedURL)
+    const response = await fetch(targetURL)
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
     data.forEach((item) => {
@@ -84,15 +83,14 @@ export const getPostcodes = async (center, bounds, currentPropertyPC) => {
 
 
 export const getSuburbCenter = async (searchFilters) => {
-  let query = `https://v0.postcodeapi.com.au/suburbs.json?`;
+  let query = `/suburbCenter`;
 
   if (searchFilters.postcode) query += `postcode=${searchFilters.postcode}`
-  else if (searchFilters.suburb !== '') query += `name=${searchFilters.suburb}&state=${searchFilters.state}`
+  else if (searchFilters.suburb !== '') query += `name=${encodeURIComponent(searchFilters.suburb)}&state=${searchFilters.state}`
   else return null;
 
-  const proxiedURL = `https://corsproxy.io/?url=${encodeURIComponent(query)}`;
   try {
-    const response = await fetch(proxiedURL);
+    const response = await fetch(query);
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
     if (data.length === 0) return null;
