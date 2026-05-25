@@ -83,7 +83,7 @@ export const getPostcodes = async (center, bounds, currentPropertyPC) => {
 
 
 export const getSuburbCenter = async (searchFilters) => {
-  let query = `/postcodeAPI/suburbCenter`;
+  let query = `/postcodeAPI/suburbCenter?`;
 
   if (searchFilters.postcode) query += `postcode=${searchFilters.postcode}`
   else if (searchFilters.suburb !== '') query += `name=${encodeURIComponent(searchFilters.suburb)}&state=${searchFilters.state}`
