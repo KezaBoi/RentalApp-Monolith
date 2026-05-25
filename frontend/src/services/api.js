@@ -1,6 +1,6 @@
 export const getStates = async () => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_CALL}/rentals/property-types`);
+    const response = await fetch(`/rentals/property-types`);
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
     return data;
@@ -12,7 +12,7 @@ export const getStates = async () => {
 
 export const getPropertyTypes = async () => {
   try{
-    const response = await fetch(`${import.meta.env.VITE_API_CALL}/rentals/states`);
+    const response = await fetch(`/rentals/states`);
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
     return data;
@@ -24,7 +24,7 @@ export const getPropertyTypes = async () => {
 
 export const getRental = async (id) => {
   try {
-    const url = `${import.meta.env.VITE_API_CALL}/rentals/${id}`
+    const url = `/rentals/${id}`
     const response = await fetch(url);
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
@@ -36,7 +36,7 @@ export const getRental = async (id) => {
 }
 
 export const getRentals = async (queryString) => {
-  const url = `${import.meta.env.VITE_API_CALL}/rentals/search?${queryString}`;
+  const url = `/rentals/search?${queryString}`;
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -104,7 +104,7 @@ export const getSuburbCenter = async (searchFilters) => {
 }
 
 export const getPropertyRating = async (token, propertyID) => {
-  const apiCall = `${import.meta.env.VITE_API_CALL}/ratings/rentals/${propertyID}`
+  const apiCall = `/ratings/rentals/${propertyID}`
   try {
     const response = await fetch(apiCall, { method: 'GET', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
     const data = await response.json();
@@ -117,7 +117,7 @@ export const getPropertyRating = async (token, propertyID) => {
 }
 
 export const getAllPropertyRatings = async (token, page) => {
-  const query = `${import.meta.env.VITE_API_CALL}/ratings?page=${page}`
+  const query = `/ratings?page=${page}`
   try {
     const response = await fetch(query, { method: 'GET', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } })
     const data = await response.json();
@@ -145,7 +145,7 @@ export const getTopProperties = async () => {
 
 export const postAuth = async (newUser, credentials) => {
 
-  const apiCall = `${import.meta.env.VITE_API_CALL}/user` + (newUser ? '/register' : '/login');
+  const apiCall = `/user` + (newUser ? '/register' : '/login');
   try {
     const response = await fetch(apiCall, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(credentials) });
     const data = await response.json();
@@ -162,7 +162,7 @@ export const postAuth = async (newUser, credentials) => {
 
 
 export const postRating = async (token, propertyID, rating) => {
-  const apiCall = `${import.meta.env.VITE_API_CALL}/ratings/rentals/${propertyID}`
+  const apiCall = `/ratings/rentals/${propertyID}`
   try {
     const response = await fetch(apiCall, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify({ rating: (rating) }) });
     const data = await response.json();
