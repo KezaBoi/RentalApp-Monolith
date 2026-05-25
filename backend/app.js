@@ -9,7 +9,7 @@ import { readOnly } from './knexfile.js';
 import indexRouter from './routes/index.js'
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,11 +33,17 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter)
 
-const credentials = {
-  key: fs.readFileSync('./certs/selfsigned.key'),
-  cert: fs.readFileSync('./certs/selfsigned.crt')
-};
-
-https.createServer(credentials, app).listen(port, () => {
-  console.log(`Server listening on https://localhost:${port}`);
-});
+if (process.env.NODE_ENV === 'production') {
+  app.listen(port, '0.0.0.0', () => {
+    console.log(`Production server listening on port: ${port}`)
+  })
+} else {
+  const credentials = {
+    key: fs.readFileSync('./certs/selfsigned.key'),
+    cert: fs.readFileSync('./certs/selfsigned.crt')
+  };
+  
+  https.createServer(credentials, app).listen(port, () => {
+    console.log(`Local dev server listening on https://localhost:${port}`);
+  });
+}
