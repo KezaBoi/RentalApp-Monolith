@@ -44,3 +44,5 @@ router.get('/suburbCenter', async (req, res) => {
     res.status(500).json({ message: 'Internal server proxy error' });
   }
 })
+
+export default router;

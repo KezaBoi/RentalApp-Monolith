@@ -61,7 +61,7 @@ export const getPostcodes = async (center, bounds, currentPropertyPC) => {
   const distanceInMeters = Math.max(Math.min(distanceInDegrees * 111000, 4000), 1500);
 
   // Fetch postcodes visible on map (need a proxy to bypass CORS restrictions)
-  const targetURL = `/postcodes?&latitude=${center[0]}&longitude=${center[1]}&distance=${distanceInMeters}`
+  const targetURL = `/postcodeAPI/postcodes?&latitude=${center[0]}&longitude=${center[1]}&distance=${distanceInMeters}`
 
   try {
     const response = await fetch(targetURL)
@@ -83,7 +83,7 @@ export const getPostcodes = async (center, bounds, currentPropertyPC) => {
 
 
 export const getSuburbCenter = async (searchFilters) => {
-  let query = `/suburbCenter`;
+  let query = `/postcodeAPI/suburbCenter`;
 
   if (searchFilters.postcode) query += `postcode=${searchFilters.postcode}`
   else if (searchFilters.suburb !== '') query += `name=${encodeURIComponent(searchFilters.suburb)}&state=${searchFilters.state}`

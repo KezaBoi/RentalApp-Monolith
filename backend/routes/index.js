@@ -5,8 +5,9 @@ import { fileURLToPath } from 'url';
 
 import swaggerDoc from '../docs/openapi.json' with {type: 'json'};
 import rentalRoutes from './rentals.js';
-import authenticationRoutes from './authentication.js'
-import ratingsRoutes from './ratings.js'
+import authenticationRoutes from './authentication.js';
+import ratingsRoutes from './ratings.js';
+import postcodeAPIRoutes from './postcodeAPI.js';
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ const buildPath = path.join(__dirname, '../../frontend/dist');
 router.use('/rentals', rentalRoutes);
 router.use('/user', authenticationRoutes);
 router.use('/ratings', ratingsRoutes);
+router.use('/postcodeAPI', postcodeAPIRoutes);
 
 router.use('/docs', swaggerUI.serve);
 router.get('/docs', swaggerUI.setup(swaggerDoc));
